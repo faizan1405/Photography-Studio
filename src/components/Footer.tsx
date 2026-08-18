@@ -1,5 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Youtube, Phone, Mail, MapPin } from "lucide-react";
+import {
+  InstagramIcon,
+  FacebookIcon,
+  YoutubeIcon,
+} from "@/components/SocialIcons";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { brand, nav, serviceLinks, logo } from "@/lib/site";
 
 export function Footer() {
@@ -14,9 +19,9 @@ export function Footer() {
           </p>
           <div className="flex gap-3">
             {[
-              { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/clickographersfilms/?hl=en" },
-              { Icon: Facebook, label: "Facebook", href: "https://www.facebook.com/share/1DTKBBbAgz/?mibextid=wwXIfr" },
-              { Icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@clickographersweddingfilms914" },
+              { Icon: InstagramIcon, label: "Instagram", href: "https://www.instagram.com/clickographersfilms/?hl=en" },
+              { Icon: FacebookIcon, label: "Facebook", href: "https://www.facebook.com/share/1DTKBBbAgz/?mibextid=wwXIfr" },
+              { Icon: YoutubeIcon, label: "YouTube", href: "https://www.youtube.com/@clickographersweddingfilms914" },
             ].map(({ Icon, label, href }) => (
               <a
                 key={label}
