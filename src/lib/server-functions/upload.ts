@@ -4,41 +4,22 @@
  * This file is compiled by TanStack Start into a server-side API handler.
  * It is NEVER shipped to the browser.
  *
- * Authentication: the upload endpoint is only reachable through the /admin
- * route, which is protected by Vercel's built-in password protection
- * (configured in the Vercel dashboard). No secret is sent from the browser
- * and no credential is stored in client-side code.
- *
- * If you need to call this from an external admin tool, use Vercel's
- * deployed preview/production URL directly with HTTP Basic Auth as
- * configured in the Vercel dashboard.
+ * All R2 write operations require admin authentication (enforced server-side).
  */
 
 import { createServerFn } from "@tanstack/react-start";
 import { getR2Client, getBucketName, publicUrl } from "@/lib/r2";
+import { requireAuth } from "@/lib/auth";
 import { PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 
-const ALLOWED_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-]);
-
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 function sanitizeSegment(segment: string): string {
-  return segment
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return segment.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-function generateObjectKey(
-  category: string,
-  filename: string,
-  index?: number,
-): string {
+function generateObjectKey(category: string, filename: string, index?: number): string {
   const cat = sanitizeSegment(category) || "misc";
   const name = sanitizeSegment(filename.replace(/\.[^.]+$/, ""));
   const unique = Date.now().toString(36);
@@ -56,6 +37,28 @@ function validateFile(file: File): string | null {
   return null;
 }
 
+function getHeaders(headers: Record<string, string | string[] | undefined>): Headers {
+  const result = new Headers();
+  for (const [key, value] of Object.entries(headers)) {
+    if (typeof value === "string") result.set(key, value);
+    else if (Array.isArray(value)) value.forEach((v) => result.append(key, v));
+  }
+  return result;
+}
+
+// TanStack Start serverFn handlers receive a context object whose `event` property
+// is not publicly typed, but it's available at runtime via the Nitro/N3 runtime.
+// We cast to `any` to bypass the incomplete public type.
+
+function getAuthHeaders(ctx: any): Headers {
+  return getHeaders(ctx.event.node.req.headers);
+}
+
+function getAuthHeadersAndRes(ctx: any): [Headers, { setHeader(name: string, value: string): void }] {
+  const headers = getHeaders(ctx.event.node.req.headers);
+  return [headers, ctx.event.node.res];
+}
+
 export const uploadImage = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => {
     if (typeof input !== "object" || input === null) {
@@ -66,32 +69,23 @@ export const uploadImage = createServerFn({ method: "POST" })
       category?: string;
       index?: number;
     };
-    if (!(file instanceof File)) {
-      throw new Error("file is required");
-    }
-    if (typeof category !== "string" || category.length > 100) {
-      throw new Error("category is required");
-    }
+    if (!(file instanceof File)) throw new Error("file is required");
+    if (typeof category !== "string" || category.length > 100) throw new Error("category is required");
     return { file, category, index: typeof index === "number" ? index : undefined };
   })
-  .handler(async ({ data }) => {
-    const { file, category, index } = data;
+  .handler(async (ctx) => {
+    const { data } = ctx;
+    const headers = getAuthHeaders(ctx);
+    requireAuth(headers);
 
-    // Validate file
+    const { file, category, index } = data as { file: File; category: string; index?: number };
     const error = validateFile(file);
-    if (error) {
-      return { success: false as const, error };
-    }
+    if (error) return { success: false as const, error };
 
-    // Generate a safe unique key
     const key = generateObjectKey(category, file.name, index);
     const bucket = getBucketName();
-
-    // Read the file buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-
-    // Upload to R2
     const client = getR2Client();
     await client.send(
       new PutObjectCommand({
@@ -103,23 +97,16 @@ export const uploadImage = createServerFn({ method: "POST" })
       }),
     );
 
-    const url = publicUrl(key);
-
-    return {
-      success: true as const,
-      key,
-      url,
-      size: file.size,
-      contentType: file.type,
-    };
+    return { success: true as const, key, url: publicUrl(key), size: file.size, contentType: file.type };
   });
 
 export const listImages = createServerFn({ method: "GET" })
-  .handler(async () => {
+  .handler(async (ctx) => {
+    const headers = getAuthHeaders(ctx);
+    requireAuth(headers);
     const client = getR2Client();
     const bucket = getBucketName();
     const objects = await import("@/lib/r2").then((m) => m.listBucketObjects());
-
     return {
       images: objects.map((o) => ({
         key: o.key,
@@ -132,26 +119,19 @@ export const listImages = createServerFn({ method: "GET" })
 
 export const checkImageExists = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => {
-    if (typeof input !== "object" || input === null) {
-      throw new Error("Invalid input");
-    }
+    if (typeof input !== "object" || input === null) throw new Error("Invalid input");
     const { key } = input as { key?: string };
-    if (typeof key !== "string") {
-      throw new Error("key is required");
-    }
+    if (typeof key !== "string") throw new Error("key is required");
     return { key };
   })
-  .handler(async ({ data }) => {
+  .handler(async (ctx) => {
+    const { data } = ctx;
+    const headers = getAuthHeaders(ctx);
+    requireAuth(headers);
     const client = getR2Client();
     const bucket = getBucketName();
-
     try {
-      await client.send(
-        new HeadObjectCommand({
-          Bucket: bucket,
-          Key: data.key,
-        }),
-      );
+      await client.send(new HeadObjectCommand({ Bucket: bucket, Key: data.key }));
       return { exists: true };
     } catch {
       return { exists: false };
