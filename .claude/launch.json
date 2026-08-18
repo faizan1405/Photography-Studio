@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "clickographers-vercel",
+      "url": "https://photography-studio-p8mfcenj2-faizanthings.vercel.app"
+    },
+    {
+      "name": "clickographers-local",
+      "url": "http://localhost:5173"
+    },
+  ]
+}
