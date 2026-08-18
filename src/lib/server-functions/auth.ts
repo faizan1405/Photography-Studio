@@ -26,8 +26,8 @@ function getHeaders(event: { node: { req: { headers: Record<string, string | str
   return headers;
 }
 
-function requireSession(headers: Headers, res: { setHeader(name: string, value: string): void }): void {
-  const session = getSession(headers);
+async function requireSession(headers: Headers, res: { setHeader(name: string, value: string): void }): Promise<void> {
+  const session = await getSession(headers);
   if (!session) {
     const error = new Error("Authentication required") as Error & { statusCode?: number };
     error.statusCode = 401;
@@ -71,7 +71,7 @@ export const login = createServerFn({ method: "POST" })
     }
 
     // Create session and set cookie
-    createSession(event.node.res, result.username!);
+    await createSession(event.node.res, result.username!);
 
     return {
       success: true as const,
@@ -82,7 +82,7 @@ export const login = createServerFn({ method: "POST" })
 export const logout = createServerFn({ method: "POST" })
   .handler(async (ctx: any) => {
     const event = ctx.event as { node: { res: { setHeader(name: string, value: string): void } } };
-    destroySession(event.node.res);
+    await destroySession(event.node.res);
     return { success: true as const };
   });
 
@@ -90,7 +90,7 @@ export const checkAuth = createServerFn({ method: "GET" })
   .handler(async (ctx: any) => {
     const event = ctx.event as { node: { req: { headers: Record<string, string | string[] | undefined> } } };
     const headers = getHeaders(event);
-    const session = getSession(headers);
+    const session = await getSession(headers);
     if (session) {
       return { authenticated: true as const, username: session.username };
     }

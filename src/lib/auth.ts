@@ -1,12 +1,15 @@
 /**
  * Server-only authentication utilities.
  *
+ * Uses JWT (HS256) for stateless session tokens stored in HTTP-only cookies.
+ *
  * CRITICAL: This file MUST only ever be imported from server-side code
  * (createServerFn handlers, src/server.ts, src/start.ts, etc.).
  * Never import into a client component.
  */
 
 import * as nodeCrypto from "node:crypto";
+import { SignJWT, jwtVerify } from "jose";
 
 // ─── Constants ──────────────────────────────────────────────────
 
@@ -21,9 +24,9 @@ const FAILED_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
 const rateLimiter = new Map<string, { attempts: number[]; lockedUntil?: number }>();
 
-// ─── Session secret ─────────────────────────────────────────────
+// ─── JWT secret ─────────────────────────────────────────────────
 
-function getSessionSecret(): string {
+function getJwtSecret(): Uint8Array {
   const secret = (process.env as Record<string, string | undefined>)["ADMIN_SESSION_SECRET"];
   if (!secret) {
     throw new Error("ADMIN_SESSION_SECRET environment variable is not configured");
@@ -31,7 +34,7 @@ function getSessionSecret(): string {
   if (secret.length < 32) {
     throw new Error("ADMIN_SESSION_SECRET must be at least 32 characters long");
   }
-  return secret;
+  return new TextEncoder().encode(secret);
 }
 
 // ─── Cookie helpers ─────────────────────────────────────────────
@@ -90,100 +93,42 @@ export function clearSessionCookie(res: { setHeader(name: string, value: string)
   res.setHeader("set-cookie", parts.join("; "));
 }
 
-// ─── Signed session cookie (stateless) ──────────────────────────
+// ─── JWT session management ─────────────────────────────────────
 
 interface SessionPayload {
-  u: string;   // username
-  iat: number; // issued-at (unix seconds)
-  exp: number; // expiration (unix seconds)
+  sub: string;   // username (subject)
+  iat: number;   // issued-at (unix seconds)
+  exp: number;   // expiration (unix seconds)
 }
 
-function base64urlEncode(data: Buffer): string {
-  return data.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-function base64urlDecode(str: string): Buffer {
-  let padded = str.replace(/-/g, "+").replace(/_/g, "/");
-  const mod = padded.length % 4;
-  if (mod) padded += "=".repeat(4 - mod);
-  return Buffer.from(padded, "base64");
-}
-
-function signPayload(secret: string, payload: string): string {
-  const hmac = nodeCrypto.createHmac("sha256", secret);
-  hmac.update(payload);
-  return base64urlEncode(Buffer.from(hmac.digest("hex"), "utf-8"));
-}
-
-function createSessionCookie(username: string): string {
-  const secret = getSessionSecret();
+export async function createSession(res: { setHeader(name: string, value: string): void }, username: string): Promise<string> {
+  const secret = getJwtSecret();
   const now = Math.floor(Date.now() / 1000);
-  const payload: SessionPayload = {
-    u: username,
-    iat: now,
-    exp: now + SESSION_TTL_MS / 1000,
-  };
-  const payloadJson = JSON.stringify(payload);
-  const payloadB64 = base64urlEncode(Buffer.from(payloadJson, "utf-8"));
-  const signature = signPayload(secret, payloadB64);
-  return `${payloadB64}.${signature}`;
+
+  const jwt = await new SignJWT({ sub: username })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setIssuedAt(now)
+    .setExpirationTime(now + SESSION_TTL_MS / 1000)
+    .sign(secret);
+
+  setSessionCookie(res, jwt);
+  return jwt;
 }
 
-function verifyAndParseSession(cookieValue: string): SessionPayload | null {
-  const secret = getSessionSecret();
-  const dotIdx = cookieValue.lastIndexOf(".");
-  if (dotIdx === -1) return null;
+export async function getSession(headers: Headers): Promise<{ username: string } | null> {
+  const token = getSessionToken(headers);
+  if (!token) return null;
 
-  const payloadB64 = cookieValue.slice(0, dotIdx);
-  const signature = cookieValue.slice(dotIdx + 1);
-  if (!payloadB64 || !signature) return null;
-
-  // Verify signature
-  const expectedSig = signPayload(secret, payloadB64);
-  // Constant-time comparison
-  let sigMatch = 1;
-  for (let i = 0; i < Math.max(signature.length, expectedSig.length); i++) {
-    sigMatch &= (signature.charCodeAt(i) ^ expectedSig.charCodeAt(i));
-  }
-  if (sigMatch !== 0) return null;
-
-  // Parse payload
-  let payload: SessionPayload;
   try {
-    payload = JSON.parse(base64urlDecode(payloadB64).toString("utf-8")) as SessionPayload;
+    const secret = getJwtSecret();
+    const { payload } = await jwtVerify<SessionPayload>(token, secret);
+    return { username: payload.sub };
   } catch {
     return null;
   }
-
-  // Validate structure
-  if (typeof payload.u !== "string" || typeof payload.iat !== "number" || typeof payload.exp !== "number") {
-    return null;
-  }
-
-  // Check expiration
-  const now = Math.floor(Date.now() / 1000);
-  if (payload.exp < now) return null;
-
-  return payload;
 }
 
-// ─── Session management (stateless) ─────────────────────────────
-
-export function createSession(res: { setHeader(name: string, value: string): void }, username: string): string {
-  const cookieValue = createSessionCookie(username);
-  setSessionCookie(res, cookieValue);
-  return cookieValue;
-}
-
-export function getSession(headers: Headers): { username: string } | null {
-  const token = getSessionToken(headers);
-  if (!token) return null;
-  const payload = verifyAndParseSession(token);
-  if (!payload) return null;
-  return { username: payload.u };
-}
-
-export function destroySession(res: { setHeader(name: string, value: string): void }): void {
+export async function destroySession(res: { setHeader(name: string, value: string): void }): Promise<void> {
   clearSessionCookie(res);
 }
 
@@ -192,7 +137,7 @@ export function destroySession(res: { setHeader(name: string, value: string): vo
 // NOTE: This rate limiter is in-memory and per-instance. On Vercel
 // serverless, different requests may hit different function instances,
 // so this is a best-effort layer only — not globally enforced.
-// The signed session cookie provides the actual authentication boundary.
+// JWT authentication provides the actual access boundary.
 
 function checkRateLimit(headers: Headers): { allowed: boolean; retryAfter?: number } {
   const key = getClientIp(headers);
@@ -307,8 +252,8 @@ export function verifyPassword(password: string, stored: string): Promise<boolea
 
 // ─── Auth middleware helper ─────────────────────────────────────
 
-export function requireAuth(headers: Headers): { username: string } {
-  const session = getSession(headers);
+export async function requireAuth(headers: Headers): Promise<{ username: string }> {
+  const session = await getSession(headers);
   if (!session) {
     const error = new Error("Authentication required") as Error & { statusCode?: number };
     error.statusCode = 401;

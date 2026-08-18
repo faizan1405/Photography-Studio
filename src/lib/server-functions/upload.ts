@@ -76,7 +76,7 @@ export const uploadImage = createServerFn({ method: "POST" })
   .handler(async (ctx) => {
     const { data } = ctx;
     const headers = getAuthHeaders(ctx);
-    requireAuth(headers);
+    await requireAuth(headers);
 
     const { file, category, index } = data as { file: File; category: string; index?: number };
     const error = validateFile(file);
@@ -127,7 +127,7 @@ export const checkImageExists = createServerFn({ method: "POST" })
   .handler(async (ctx) => {
     const { data } = ctx;
     const headers = getAuthHeaders(ctx);
-    requireAuth(headers);
+    await requireAuth(headers);
     const client = getR2Client();
     const bucket = getBucketName();
     try {
