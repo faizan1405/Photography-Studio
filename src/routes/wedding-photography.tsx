@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img } from "@/lib/site";
-import heroVideo from "@/assets/Wedding_Photoshoots.mp4.asset.json";
+import { img, video } from "@/lib/site";
 
 export const Route = createFileRoute("/wedding-photography")({
   head: () => ({
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/wedding-photography")({
       tagline="The day itself. Fire, flowers, hands, tears and a thousand people — held together in photographs and one film you'll watch every anniversary."
       intro="Wedding day coverage is our core work. Two lead photographers, a dedicated cinematography team, and a ritual-by-ritual plan built with your pandit's timeline. We know when the varmala lands and where to stand for the kanyadaan, so nothing is caught from behind a shoulder."
       hero={img.heroVarmala}
-      heroVideo={heroVideo.url}
+      heroVideo={video.wedding}
       heroAlt="Bride and groom exchanging varmala garlands"
       stories={[
         {

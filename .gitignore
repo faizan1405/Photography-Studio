@@ -20,6 +20,17 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel/output
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -30,6 +41,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-.vercel/output
-.vercel/output

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img } from "@/lib/site";
-import heroVideo from "@/assets/Sangeet_Photoshoots.mp4.asset.json";
+import { img, video } from "@/lib/site";
 
 export const Route = createFileRoute("/sangeet")({
   head: () => ({
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/sangeet")({
       tagline="Months of secret rehearsals, one stage, and a family that finally lets go. Sangeet is chaos — our job is to catch it cleanly."
       intro="Sangeet is the hardest night to shoot well: fast movement, coloured stage light, and moments that never repeat. We cover it with multiple photographers and cinematographers, our own lighting, and a plan built from your run-of-show."
       hero={img.heroSangeet}
-      heroVideo={heroVideo.url}
+      heroVideo={video.sangeet}
       heroAlt="Bride and groom dancing together on the sangeet stage"
       stories={[
         {

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img } from "@/lib/site";
-import heroVideo from "@/assets/Haldi_and_Mehendi_Photoshoots.mp4.asset.json";
+import { img, video } from "@/lib/site";
 
 export const Route = createFileRoute("/mehndi-photoshoots")({
   head: () => ({
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/mehndi-photoshoots")({
       tagline="Hours of stillness, hands held out, cousins on the floor, and detail everywhere you look. Mehndi is the most photographic day of the week."
       intro="Mehndi rewards patience and a macro lens. We shoot the henna as it grows across your hands, the jewellery laid out before it's worn, the marigold and the mirrors — and the easy, unguarded family time that only happens on this day."
       hero={img.heroMehndi}
-      heroVideo={heroVideo.url}
+      heroVideo={video.mehndi}
       heroAlt="Bride having intricate mehndi applied to her hands"
       stories={[
         {

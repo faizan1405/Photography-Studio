@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { brand, nav, serviceLinks } from "@/lib/site";
+import { brand, nav, serviceLinks, logo } from "@/lib/site";
 import { ButtonLink } from "./ui";
-import logo from "@/assets/logo.png";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);

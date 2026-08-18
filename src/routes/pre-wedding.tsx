@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img } from "@/lib/site";
-import heroVideo from "@/assets/Pre_Wedding_Photoshoots.mp4.asset.json";
+import { img, video } from "@/lib/site";
 
 export const Route = createFileRoute("/pre-wedding")({
   head: () => ({
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/pre-wedding")({
       tagline="Before the guests arrive, before the schedule takes over — one unhurried day for the two of you in front of the camera."
       intro="Pre wedding sessions are where couples get comfortable with us. We scout locations for light, plan a loose route through the day, and let the shoot breathe. You'll leave with a portrait set and a short film you'll want to play at the sangeet."
       hero={img.heroPrewedding}
-      heroVideo={heroVideo.url}
+      heroVideo={video.preWedding}
       heroAlt="Indian couple walking through a palace courtyard during their pre wedding shoot"
       stories={[
         {

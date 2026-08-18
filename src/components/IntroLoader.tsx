@@ -1,7 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { montage } from "@/lib/site";
-import logo from "@/assets/logo.png";
+import { montage, logo } from "@/lib/site";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 

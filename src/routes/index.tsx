@@ -6,8 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FadeUp, RevealImage } from "@/components/Reveal";
 import { ButtonLink, SectionHeading } from "@/components/ui";
-import { brand, img, serviceLinks } from "@/lib/site";
-import heroVideo from "@/assets/Hero_Section_video.mp4.asset.json";
+import { brand, img, serviceLinks, video } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -102,7 +101,7 @@ function Home() {
 
       <PageHero
         src={img.heroPheras}
-        videoSrc={heroVideo.url}
+        videoSrc={video.heroSection}
         alt="Indian bride and groom taking their pheras around the sacred fire"
         eyebrow="Indian Wedding Photography & Films"
         title="Your wedding, remembered the way it felt"
