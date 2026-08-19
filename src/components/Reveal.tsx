@@ -76,15 +76,14 @@ export function RevealImage({
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         onLoad={() => setLoaded(true)}
-        animate={loaded ? { scale: 1, opacity: 1 } : { scale: 1.12, opacity: 0 }}
+        initial={{ scale: 1.12 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true, margin: "-8%" }}
         transition={{ duration: 1.5, delay, ease: EASE }}
-        className={`h-full w-full object-cover will-change-transform photo-hover ${imgClassName}`}
+        className={`h-full w-full object-cover will-change-transform photo-hover ${imgClassName} transition-opacity duration-700 ${loaded ? "opacity-100" : "opacity-0"}`}
       />
       {!loaded && !reduce && (
-        <motion.span
-          aria-hidden
-          className="absolute inset-0 z-10 bg-cream"
-        />
+        <span className="absolute inset-0 z-10 bg-cream" />
       )}
       <span
         aria-hidden

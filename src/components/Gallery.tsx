@@ -3,33 +3,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "@/components/ui";
 import { galleryCategories, galleryTabs } from "@/lib/gallery-data";
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+type TabId = (typeof galleryTabs)[number]["id"];
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const x = a[i]!;
-    const y = a[j]!;
-    a[i] = y;
-    a[j] = x;
+    [a[i], a[j]] = [a[j]!, a[i]!];
   }
   return a;
 }
 
-type TabId = (typeof galleryTabs)[number]["id"];
-
 export function Gallery() {
   const [activeTab, setActiveTab] = useState<TabId>("all");
 
-  const shuffledAll = useMemo(() => {
-    const all = galleryCategories.flatMap((c) => c.photos);
-    return shuffle(all);
-  }, []);
-
   const displayedPhotos = useMemo(() => {
-    if (activeTab === "all") return shuffledAll;
+    if (activeTab === "all") {
+      const all = galleryCategories.flatMap((c) => c.photos);
+      return shuffle(all);
+    }
     const cat = galleryCategories.find((c) => c.id === activeTab);
     return cat ? shuffle(cat.photos) : [];
-  }, [activeTab, shuffledAll]);
+  }, [activeTab]);
 
   const noPhotos = displayedPhotos.length === 0;
 
@@ -92,12 +89,12 @@ export function Gallery() {
               {displayedPhotos.map((src, i) => (
                 <div key={src} className="mb-5 break-inside-avoid">
                   <motion.div
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 0.55,
-                      delay: Math.min(i * 0.04, 0.8),
-                      ease: [0.16, 1, 0.3, 1],
+                      duration: 0.7,
+                      delay: i * 0.08,
+                      ease: EASE,
                     }}
                   >
                     <img
