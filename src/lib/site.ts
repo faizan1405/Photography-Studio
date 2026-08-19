@@ -9,6 +9,7 @@ export const img = {
   heroServices: r2Url("hero/services"),
   heroAbout: r2Url("hero/about"),
   founder: r2Url("founder"),
+  pw1: r2Url("pw/1"),
   pw2: r2Url("pw/2"),
   pw3: r2Url("pw/3"),
   pw4: r2Url("pw/4"),
@@ -144,6 +145,7 @@ export type GalleryItem = {
 
 export const gallery: GalleryItem[] = [
   { src: img.heroPrewedding, alt: "Indian couple walking through a palace courtyard at golden hour", category: "Pre Wedding" },
+  { src: img.pw1, alt: "Pre-wedding - couple sharing a beautiful moment together", category: "Pre Wedding" },
   { src: img.pw2, alt: "Couple embracing in a mustard field at sunset", category: "Pre Wedding", tall: true },
   { src: img.pw3, alt: "Couple laughing on stone steps beside a lake", category: "Pre Wedding" },
   { src: img.pw4, alt: "Close portrait of a couple with foreheads touching", category: "Pre Wedding", tall: true },

@@ -39,6 +39,7 @@ export const KNOWN_KEYS = [
   // Logo
   "logo",
   // Pre Wedding
+  "pw/1",
   "pw/2",
   "pw/3",
   "pw/4",
