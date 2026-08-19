@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img, video } from "@/lib/site";
 import { SectionHeading } from "@/components/ui";
 import { FadeUp, RevealImage } from "@/components/Reveal";
+import { galleryCategories } from "@/lib/gallery-data";
 
 export const Route = createFileRoute("/mehndi-photoshoots")({
   head: () => ({
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/mehndi-photoshoots")({
         content:
           "Mehndi photoshoots and films — henna detail, bridal portraits and family moments through the slow green-and-gold morning before the wedding.",
       },
-      { property: "og:title", content: "Mehndi Photoshoots | Clickographers" },
+      { property: "og:title", content: "Mehndi Photoshoots | Clickographers Wedding Films" },
       {
         property: "og:description",
         content:
@@ -101,52 +101,14 @@ export const Route = createFileRoute("/mehndi-photoshoots")({
         },
       ]}
       extraContent={
-        <MehndiGallery />
+        <MehndiPageGallery />
       }
     />
   ),
 });
 
-const HaldiPhotos = [
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00187.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00213.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00218.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00430.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00451.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00469.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00660.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00664.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01146.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01156.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01158.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01257.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01283.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01305.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01351.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01361.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01375.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01433.webp",
-];
-
-const MehendiPhotos = [
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01434.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01548.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01562.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01574.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01577.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01578.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01621.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01789.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01875.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01905.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7303.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7318.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7340.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7419.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7425.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7431.webp",
-  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7433.webp",
-];
+const haldiCategory = galleryCategories.find((c) => c.id === "haldi");
+const mehendiCategory = galleryCategories.find((c) => c.id === "mehendi");
 
 function PhotoGrid({ photos, altPrefix }: { photos: string[]; altPrefix: string }) {
   return (
@@ -165,7 +127,7 @@ function PhotoGrid({ photos, altPrefix }: { photos: string[]; altPrefix: string 
   );
 }
 
-function MehndiGallery() {
+function MehndiPageGallery() {
   return (
     <>
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
@@ -174,7 +136,7 @@ function MehndiGallery() {
           title="Haldi photographs"
           intro="The bright, sunlit morning — turmeric, laughter, and the warmth of family before the celebrations begin."
         />
-        <PhotoGrid photos={HaldiPhotos} altPrefix="Haldi ceremony" />
+        <PhotoGrid photos={haldiCategory?.photos ?? []} altPrefix="Haldi ceremony" />
       </section>
 
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
@@ -183,7 +145,7 @@ function MehndiGallery() {
           title="Mehndi photographs"
           intro="Henna detail, green and gold, hands held out and the slow, still morning before the wedding."
         />
-        <PhotoGrid photos={MehendiPhotos} altPrefix="Mehndi ceremony" />
+        <PhotoGrid photos={mehendiCategory?.photos ?? []} altPrefix="Mehndi ceremony" />
       </section>
     </>
   );

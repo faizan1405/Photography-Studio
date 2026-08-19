@@ -6,11 +6,12 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { IntroLoader } from "@/components/IntroLoader";
 
 function NotFoundComponent() {
   return (
@@ -118,9 +119,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [showLoader, setShowLoader] = useState(true);
 
   return (
     <QueryClientProvider client={queryClient}>
+      {showLoader && <IntroLoader onDone={() => setShowLoader(false)} />}
       <Outlet />
       <WhatsAppButton />
     </QueryClientProvider>
