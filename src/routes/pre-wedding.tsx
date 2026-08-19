@@ -26,26 +26,26 @@ export const Route = createFileRoute("/pre-wedding")({
       title="A quiet day, just the two of you"
       tagline="Before the guests arrive, before the schedule takes over — one unhurried day for the two of you in front of the camera."
       intro="Pre wedding sessions are where couples get comfortable with us. We scout locations for light, plan a loose route through the day, and let the shoot breathe. You'll leave with a portrait set and a short film you'll want to play at the sangeet."
-      hero="/pre-wedding/DSC_0644.jpg"
+      hero="https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0644.jpg"
       heroVideo=""
       heroAlt="Indian couple walking through a palace courtyard during their pre wedding shoot"
       stories={[
         {
           title: "Locations chosen for you, not for the algorithm",
           text: "We scout in advance and build a route that flows with the light rather than fighting it.",
-          image: "/pre-wedding/DSC_0746.jpg",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0746.jpg",
           alt: "Couple embracing in a mustard field at sunset",
         },
         {
           title: "Direction that feels like conversation",
           text: "We don't hand you poses. We give you something to do together — walk, whisper, react — and photograph what happens in between.",
-          image: "/pre-wedding/DSC_0791.jpg",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0791.jpg",
           alt: "Couple laughing together on stone steps beside a lake",
         },
         {
           title: "A short film to open your wedding week",
           text: "Every pre wedding package includes a sixty to ninety second cinematic edit, graded and scored, ready to project at your sangeet.",
-          image: "/pre-wedding/DSC_0836.jpg",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0836.jpg",
           alt: "Close portrait of a couple with foreheads touching",
         },
       ]}
