@@ -28,26 +28,26 @@ export const Route = createFileRoute("/mehndi-photoshoots")({
       title="Green, gold and the slowest morning"
       tagline="Hours of stillness, hands held out, cousins on the floor, and detail everywhere you look. Mehndi is the most photographic day of the week."
       intro="Mehndi rewards patience and a macro lens. We shoot the henna as it grows across your hands, the jewellery laid out before it's worn, the marigold and the mirrors — and the easy, unguarded family time that only happens on this day."
-      hero=""
+      hero="https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00664.webp"
       heroVideo=""
       heroAlt="Bride having intricate mehndi applied to her hands"
       stories={[
         {
           title: "The henna, frame by frame",
           text: "We photograph the design as it builds — first outline to finished palm — so you keep a record of the artistry, not just the result. Close detail work shot with macro glass and soft window light.",
-          image: "",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC01283.webp",
           alt: "Finished bridal mehndi detail with gold bangles",
         },
         {
           title: "The room, not just the bride",
           text: "Sisters arguing over songs, a grandmother threading jasmine, plates of food passing over people's heads. The mehndi is where families are most themselves, and that's what we document.",
-          image: "",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/DSC00430.webp",
           alt: "Bride laughing with her friends at her mehndi",
         },
         {
           title: "Bridal portraits while the henna dries",
           text: "A twenty minute portrait window built into every mehndi package — floral jewellery, green and gold, natural light. These often become the favourite portraits of the entire wedding.",
-          image: "",
+          image: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/assets/haldi-mehendi/IMG_7303.webp",
           alt: "Bridal portrait in green and gold with floral jewellery",
         },
       ]}
