@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useState } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -37,10 +38,6 @@ const maskExit: Record<Dir, { x?: string; y?: string }> = {
   down: { y: "101%" },
 };
 
-/**
- * Photograph reveal: a cream panel slides away while the image settles
- * from a slight enlargement into place. Hover = subtle zoom + tilt only.
- */
 export function RevealImage({
   src,
   alt,
@@ -65,6 +62,8 @@ export function RevealImage({
   height?: number;
 }) {
   const reduce = useReducedMotion();
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div
       className={`group photo-frame relative overflow-hidden ${radius} bg-cream ${className}`}
@@ -76,13 +75,14 @@ export function RevealImage({
         height={height}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
-        className={`h-full w-full object-cover will-change-transform photo-hover ${imgClassName}`}
-        initial={reduce ? { scale: 1 } : { scale: 1.12 }}
+        onLoad={() => setLoaded(true)}
+        className={`h-full w-full object-cover will-change-transform photo-hover ${imgClassName} ${loaded ? "" : "opacity-0"}`}
+        initial={reduce || loaded ? { scale: 1 } : { scale: 1.12 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true, margin: "-8%" }}
         transition={{ duration: 1.5, delay, ease: EASE }}
       />
-      {!reduce && (
+      {!reduce && !loaded && (
         <motion.span
           aria-hidden
           className="absolute inset-0 z-10 bg-cream"
