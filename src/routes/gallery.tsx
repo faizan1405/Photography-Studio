@@ -29,7 +29,7 @@ export const Route = createFileRoute("/gallery")({
   component: Gallery,
 });
 
-const filters = ["All", "Pre Wedding", "Sangeet", "Mehndi", "Wedding Photography"] as const;
+const filters = ["All", "Pre Wedding", "Sangeet", "Mehndi", "Wedding Photography", "Ring Ceremony"] as const;
 
 function Gallery() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
