@@ -3,7 +3,6 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
-  useRouter,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -11,8 +10,6 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { IntroLoader } from "@/components/IntroLoader";
-import { PageTransition } from "@/components/PageTransition";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 function NotFoundComponent() {
@@ -121,23 +118,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [intro, setIntro] = useState(true);
-  const finish = useCallback(() => setIntro(false), []);
-
-  useEffect(() => {
-    document.body.style.overflow = intro ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [intro]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <WhatsAppButton />
-      <PageTransition />
-      {intro && <IntroLoader onDone={finish} />}
     </QueryClientProvider>
   );
 }

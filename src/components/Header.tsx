@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { brand, nav, serviceLinks, logo } from "@/lib/site";
+import { brand, nav, serviceLinks } from "@/lib/site";
 import { ButtonLink } from "./ui";
 
 export function Header() {
@@ -32,13 +32,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 py-1.5 lg:px-10">
         <Link to="/" className="shrink-0" aria-label={brand.name} onClick={() => setOpen(false)}>
-          <img
-            src={logo}
-            alt={brand.name}
-            className={`w-auto transition-all duration-500 ${
-              scrolled ? "h-12 sm:h-14 lg:h-16" : "h-14 sm:h-18 lg:h-22"
-            }`}
-          />
+          <span className="font-display text-xl text-wine sm:text-2xl">{brand.short}</span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

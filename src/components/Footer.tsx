@@ -5,14 +5,14 @@ import {
   YoutubeIcon,
 } from "@/components/SocialIcons";
 import { Phone, Mail, MapPin } from "lucide-react";
-import { brand, nav, serviceLinks, logo } from "@/lib/site";
+import { brand, nav, serviceLinks } from "@/lib/site";
 
 export function Footer() {
   return (
     <footer className="relative z-10 mt-24 border-t border-gold/30 bg-cream/80">
       <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 lg:grid-cols-4 lg:px-10">
         <div className="flex flex-col gap-5">
-          <img src={logo} alt={brand.name} className="h-40 w-auto self-start lg:h-48" />
+          <h3 className="font-display text-2xl text-wine">{brand.short}</h3>
           <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
             Cinematic wedding photography and films for couples who want their day
             remembered exactly as it felt.

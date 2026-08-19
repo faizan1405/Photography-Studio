@@ -32,28 +32,28 @@ const services = [
   {
     label: "Pre Wedding",
     to: "/pre-wedding",
-    image: img.heroPrewedding,
+    image: "",
     alt: "Indian couple in a palace courtyard during a pre wedding shoot",
     text: "Unhurried portrait films in palaces, fields and quiet corners of the city.",
   },
   {
     label: "Sangeet",
     to: "/sangeet",
-    image: img.heroSangeet,
+    image: "",
     alt: "Bride and groom dancing at their sangeet",
     text: "Stage lights, family choreography and the loudest laughter of the week.",
   },
   {
     label: "Mehndi",
     to: "/mehndi-photoshoots",
-    image: img.heroMehndi,
+    image: "",
     alt: "Bride's hands being decorated with mehndi",
     text: "Green, gold and detail — the slow, tactile morning before the storm.",
   },
   {
     label: "Wedding Photography",
     to: "/wedding-photography",
-    image: img.heroVarmala,
+    image: "",
     alt: "Varmala exchange between bride and groom",
     text: "Varmala to Vidai, capturing the emotions, celebrations and fleeting moments that make your wedding yours.",
   },
@@ -100,7 +100,7 @@ function Home() {
       <Header />
 
       <PageHero
-        src={img.heroPheras}
+        src=""
         videoSrc={video.heroSection}
         alt="Indian bride and groom taking their pheras around the sacred fire"
         eyebrow="Indian Wedding Photography & Films"
@@ -139,7 +139,7 @@ function Home() {
             </div>
           </FadeUp>
           <RevealImage
-            src={img.heroAbout}
+            src=""
             alt="Clickographers photographer at work during a wedding ceremony"
             dir="right"
             className="aspect-[4/5] w-full"
@@ -202,15 +202,15 @@ function Home() {
         <SectionHeading eyebrow="Selected Frames" title="From recent weddings" />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { src: img.wd2, alt: "Bridal portrait in a red and gold lehenga", tall: true },
-            { src: img.pw2, alt: "Couple embracing in a mustard field at sunset" },
-            { src: img.sg2, alt: "Dancer twirling on the sangeet stage" },
-            { src: img.mh2, alt: "Finished bridal mehndi with gold bangles" },
-            { src: img.wd4, alt: "Emotional vidaai moment", tall: true },
-            { src: img.pw4, alt: "Close portrait of a couple, foreheads touching" },
+            { src: "", alt: "", tall: true },
+            { src: "", alt: "" },
+            { src: "", alt: "" },
+            { src: "", alt: "" },
+            { src: "", alt: "", tall: true },
+            { src: "", alt: "" },
           ].map((p, i) => (
             <RevealImage
-              key={p.src}
+              key={i}
               src={p.src}
               alt={p.alt}
               delay={i * 0.05}
@@ -266,7 +266,7 @@ function Home() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="relative overflow-hidden rounded-[2.5rem]">
           <img
-            src={img.heroServices}
+            src=""
             alt="Luxury wedding mandap decorated with flowers at dusk"
             loading="lazy"
             className="h-[520px] w-full object-cover"

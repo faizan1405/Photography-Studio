@@ -31,28 +31,28 @@ export const Route = createFileRoute("/services")({
 const cards = [
   {
     ...serviceLinks[2],
-    image: img.heroMehndi,
+    image: "",
     alt: "Bride having mehndi applied before her wedding",
     from: "₹45,000",
     text: "Detail-led coverage of the mehndi morning — henna work, jewellery, family and light.",
   },
   {
     ...serviceLinks[0],
-    image: img.heroPrewedding,
+    image: "",
     alt: "Couple during a pre wedding shoot in a palace courtyard",
     from: "₹65,000",
     text: "A half or full day portrait session in locations chosen for you, plus a short film.",
   },
   {
     ...serviceLinks[1],
-    image: img.heroSangeet,
+    image: "",
     alt: "Sangeet night performance with bride and groom dancing",
     from: "₹55,000",
     text: "Stage-lit coverage of performances, reactions and the after-party energy.",
   },
   {
     ...serviceLinks[3],
-    image: img.heroVarmala,
+    image: "",
     alt: "Varmala exchange during an Indian wedding ceremony",
     from: "₹1,25,000",
     text: "Full wedding day documentation from getting ready to vidaai, photo and film.",
@@ -95,7 +95,7 @@ function Services() {
       <Header />
 
       <PageHero
-        src={img.heroServices}
+        src=""
         alt="Wedding mandap decorated with flowers at dusk"
         eyebrow="Services & Packages"
         title="Coverage built around your celebration"
@@ -146,7 +146,7 @@ function Services() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <RevealImage
-            src={img.wd5}
+            src=""
             alt="Couple walking through a shower of rose petals"
             className="aspect-[4/5] w-full"
           />

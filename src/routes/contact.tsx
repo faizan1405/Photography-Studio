@@ -157,7 +157,7 @@ function Contact() {
               </div>
             </FadeUp>
             <RevealImage
-              src={img.heroVarmala}
+              src=""
               alt="Bride and groom exchanging varmala garlands"
               dir="right"
               className="aspect-[4/3] w-full"

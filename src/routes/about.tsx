@@ -60,7 +60,7 @@ function About() {
       <Header />
 
       <PageHero
-        src={img.heroAbout}
+        src=""
         alt="Clickographers photographer photographing a wedding ceremony"
         eyebrow="Our Story"
         title="Twelve years of standing quietly in the middle of joy"
@@ -90,7 +90,7 @@ function About() {
             </div>
           </FadeUp>
           <RevealImage
-            src={img.heroAbout}
+            src=""
             alt="Clickographers photographer photographing a wedding ceremony"
             priority
             dir="right"
@@ -102,7 +102,7 @@ function About() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <RevealImage
-            src={img.founder}
+            src=""
             alt="Portrait of the founder of Clickographers Wedding Films"
             className="aspect-[3/4] w-full"
           />
@@ -157,12 +157,12 @@ function About() {
       <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-16">
         <div className="grid gap-5 sm:grid-cols-3">
           {[
-            { src: img.wd3, alt: "Groom portrait in an ivory sherwani" },
-            { src: img.mh4, alt: "Bridal portrait in green and gold with floral jewellery" },
-            { src: img.pw5, alt: "Couple on a Jaipur rooftop terrace at sunset" },
+            { src: "", alt: "" },
+            { src: "", alt: "" },
+            { src: "", alt: "" },
           ].map((p, i) => (
             <RevealImage
-              key={p.src}
+              key={i}
               src={p.src}
               alt={p.alt}
               delay={i * 0.06}
