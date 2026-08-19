@@ -57,6 +57,13 @@ const services = [
     alt: "Varmala exchange between bride and groom",
     text: "Varmala to Vidai, capturing the emotions, celebrations and fleeting moments that make your wedding yours.",
   },
+  {
+    label: "Ring Ceremony",
+    to: "/ring-ceremony",
+    image: "",
+    alt: "Couple exchanging rings during their ring ceremony",
+    text: "The first public promise — the ring exchange, family reactions, and the quiet start of everything to come.",
+  },
 ] as const;
 
 const stats = [

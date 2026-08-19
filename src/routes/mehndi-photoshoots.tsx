@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
 import { img, video } from "@/lib/site";
+import { SectionHeading } from "@/components/ui";
+import { FadeUp, RevealImage } from "@/components/Reveal";
 
 export const Route = createFileRoute("/mehndi-photoshoots")({
   head: () => ({
@@ -98,6 +100,91 @@ export const Route = createFileRoute("/mehndi-photoshoots")({
           ],
         },
       ]}
+      extraContent={
+        <MehndiGallery />
+      }
     />
   ),
 });
+
+const HaldiPhotos = [
+  "/assets/haldi-mehendi/DSC00187.webp",
+  "/assets/haldi-mehendi/DSC00213.webp",
+  "/assets/haldi-mehendi/DSC00218.webp",
+  "/assets/haldi-mehendi/DSC00430.webp",
+  "/assets/haldi-mehendi/DSC00451.webp",
+  "/assets/haldi-mehendi/DSC00469.webp",
+  "/assets/haldi-mehendi/DSC00660.webp",
+  "/assets/haldi-mehendi/DSC00664.webp",
+  "/assets/haldi-mehendi/DSC01146.webp",
+  "/assets/haldi-mehendi/DSC01156.webp",
+  "/assets/haldi-mehendi/DSC01158.webp",
+  "/assets/haldi-mehendi/DSC01257.webp",
+  "/assets/haldi-mehendi/DSC01283.webp",
+  "/assets/haldi-mehendi/DSC01305.webp",
+  "/assets/haldi-mehendi/DSC01351.webp",
+  "/assets/haldi-mehendi/DSC01361.webp",
+  "/assets/haldi-mehendi/DSC01375.webp",
+  "/assets/haldi-mehendi/DSC01433.webp",
+];
+
+const MehendiPhotos = [
+  "/assets/haldi-mehendi/DSC01434.webp",
+  "/assets/haldi-mehendi/DSC01548.webp",
+  "/assets/haldi-mehendi/DSC01562.webp",
+  "/assets/haldi-mehendi/DSC01574.webp",
+  "/assets/haldi-mehendi/DSC01577.webp",
+  "/assets/haldi-mehendi/DSC01578.webp",
+  "/assets/haldi-mehendi/DSC01621.webp",
+  "/assets/haldi-mehendi/DSC01789.webp",
+  "/assets/haldi-mehendi/DSC01875.webp",
+  "/assets/haldi-mehendi/DSC01905.webp",
+  "/assets/haldi-mehendi/IMG_7303.webp",
+  "/assets/haldi-mehendi/IMG_7318.webp",
+  "/assets/haldi-mehendi/IMG_7340.webp",
+  "/assets/haldi-mehendi/IMG_7419.webp",
+  "/assets/haldi-mehendi/IMG_7425.webp",
+  "/assets/haldi-mehendi/IMG_7431.webp",
+  "/assets/haldi-mehendi/IMG_7433.webp",
+];
+
+function PhotoGrid({ photos, altPrefix }: { photos: string[]; altPrefix: string }) {
+  return (
+    <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {photos.map((src, i) => (
+        <RevealImage
+          key={src}
+          src={src}
+          alt={`${altPrefix} photo ${i + 1}`}
+          delay={i * 0.04}
+          radius="rounded-[1.75rem]"
+          className={i % 5 === 0 ? "aspect-[3/4] w-full" : "aspect-[4/5] w-full"}
+        />
+      ))}
+    </div>
+  );
+}
+
+function MehndiGallery() {
+  return (
+    <>
+      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
+        <SectionHeading
+          eyebrow="Haldi"
+          title="Haldi photographs"
+          intro="The bright, sunlit morning — turmeric, laughter, and the warmth of family before the celebrations begin."
+        />
+        <PhotoGrid photos={HaldiPhotos} altPrefix="Haldi ceremony" />
+      </section>
+
+      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
+        <SectionHeading
+          eyebrow="Mehndi"
+          title="Mehndi photographs"
+          intro="Henna detail, green and gold, hands held out and the slow, still morning before the wedding."
+        />
+        <PhotoGrid photos={MehendiPhotos} altPrefix="Mehndi ceremony" />
+      </section>
+    </>
+  );
+}

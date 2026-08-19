@@ -23,5 +23,6 @@ export const serviceLinks = [
   { label: "Sangeet Photoshoots", to: "/sangeet" },
   { label: "Wedding Photoshoots", to: "/wedding-photography" },
   { label: "Pre Wedding Photoshoots", to: "/pre-wedding" },
+  { label: "Ring Ceremony", to: "/ring-ceremony" },
 ] as const;
 

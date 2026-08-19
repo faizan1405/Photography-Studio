@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import type { ReactNode } from "react";
 import { RevealImage, FadeUp } from "./Reveal";
 import { PageHero } from "./PageHero";
 import { ButtonLink, SectionHeading } from "./ui";
@@ -23,6 +24,7 @@ export function ServicePage({
   packages,
   inclusions,
   floral,
+  extraContent,
 }: {
   eyebrow: string;
   title: string;
@@ -35,6 +37,7 @@ export function ServicePage({
   packages: Pkg[];
   inclusions: string[];
   floral: Variant;
+  extraContent?: ReactNode;
 }) {
   return (
     <PageShell floral={floral} panels={4}>
@@ -184,6 +187,8 @@ export function ServicePage({
           </ButtonLink>
         </FadeUp>
       </section>
+
+      {extraContent}
 
       <Footer />
     </PageShell>

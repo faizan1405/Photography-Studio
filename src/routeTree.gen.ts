@@ -15,6 +15,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as MehndiPhotoshootsRouteImport } from './routes/mehndi-photoshoots'
 import { Route as PreWeddingRouteImport } from './routes/pre-wedding'
+import { Route as RingCeremonyRouteImport } from './routes/ring-ceremony'
 import { Route as SangeetRouteImport } from './routes/sangeet'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WeddingPhotographyRouteImport } from './routes/wedding-photography'
@@ -49,6 +50,11 @@ const PreWeddingRoute = PreWeddingRouteImport.update({
   path: '/pre-wedding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RingCeremonyRoute = RingCeremonyRouteImport.update({
+  id: '/ring-ceremony',
+  path: '/ring-ceremony',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SangeetRoute = SangeetRouteImport.update({
   id: '/sangeet',
   path: '/sangeet',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/mehndi-photoshoots': typeof MehndiPhotoshootsRoute
   '/pre-wedding': typeof PreWeddingRoute
+  '/ring-ceremony': typeof RingCeremonyRoute
   '/sangeet': typeof SangeetRoute
   '/services': typeof ServicesRoute
   '/wedding-photography': typeof WeddingPhotographyRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/mehndi-photoshoots': typeof MehndiPhotoshootsRoute
   '/pre-wedding': typeof PreWeddingRoute
+  '/ring-ceremony': typeof RingCeremonyRoute
   '/sangeet': typeof SangeetRoute
   '/services': typeof ServicesRoute
   '/wedding-photography': typeof WeddingPhotographyRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/mehndi-photoshoots': typeof MehndiPhotoshootsRoute
   '/pre-wedding': typeof PreWeddingRoute
+  '/ring-ceremony': typeof RingCeremonyRoute
   '/sangeet': typeof SangeetRoute
   '/services': typeof ServicesRoute
   '/wedding-photography': typeof WeddingPhotographyRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/mehndi-photoshoots'
     | '/pre-wedding'
+    | '/ring-ceremony'
     | '/sangeet'
     | '/services'
     | '/wedding-photography'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/mehndi-photoshoots'
     | '/pre-wedding'
+    | '/ring-ceremony'
     | '/sangeet'
     | '/services'
     | '/wedding-photography'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/mehndi-photoshoots'
     | '/pre-wedding'
+    | '/ring-ceremony'
     | '/sangeet'
     | '/services'
     | '/wedding-photography'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   MehndiPhotoshootsRoute: typeof MehndiPhotoshootsRoute
   PreWeddingRoute: typeof PreWeddingRoute
+  RingCeremonyRoute: typeof RingCeremonyRoute
   SangeetRoute: typeof SangeetRoute
   ServicesRoute: typeof ServicesRoute
   WeddingPhotographyRoute: typeof WeddingPhotographyRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PreWeddingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ring-ceremony': {
+      id: '/ring-ceremony'
+      path: '/ring-ceremony'
+      fullPath: '/ring-ceremony'
+      preLoaderRoute: typeof RingCeremonyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sangeet': {
       id: '/sangeet'
       path: '/sangeet'
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   MehndiPhotoshootsRoute: MehndiPhotoshootsRoute,
   PreWeddingRoute: PreWeddingRoute,
+  RingCeremonyRoute: RingCeremonyRoute,
   SangeetRoute: SangeetRoute,
   ServicesRoute: ServicesRoute,
   WeddingPhotographyRoute: WeddingPhotographyRoute,
