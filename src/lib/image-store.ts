@@ -43,6 +43,11 @@ export const KNOWN_KEYS = [
   "pw/3",
   "pw/4",
   "pw/5",
+  "pw/6",
+  "pw/7",
+  "pw/8",
+  "pw/9",
+  "pw/10",
   // Sangeet
   "sg/2",
   "sg/3",
@@ -79,6 +84,11 @@ export const DEFAULT_MANIFEST: Manifest = {
     { key: "pw/3", alt: "Couple laughing on stone steps beside a lake", category: "Pre Wedding" },
     { key: "pw/4", alt: "Close portrait of a couple with foreheads touching", category: "Pre Wedding", tall: true },
     { key: "pw/5", alt: "Couple on a Jaipur rooftop terrace", category: "Pre Wedding" },
+    { key: "pw/6", alt: "Couple walking hand in hand through a sunlit corridor", category: "Pre Wedding" },
+    { key: "pw/7", alt: "Couple sharing a quiet moment by a historic fountain", category: "Pre Wedding", tall: true },
+    { key: "pw/8", alt: "Playful couple laughing amidst cascading flower petals", category: "Pre Wedding" },
+    { key: "pw/9", alt: "Romantic silhouette of a couple at golden hour", category: "Pre Wedding", tall: true },
+    { key: "pw/10", alt: "Couple sitting together on palace steps at dusk", category: "Pre Wedding" },
     // Sangeet
     { key: "sg/2", alt: "Dancer twirling in a shimmering lehenga on stage", category: "Sangeet", tall: true },
     { key: "sg/3", alt: "Family dancing together under marigold garlands", category: "Sangeet" },
