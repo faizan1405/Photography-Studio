@@ -1,11 +1,15 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, type ReactNode } from "react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Full-bleed page hero with a scroll-driven zoom/parallax on the photograph.
- * Used at the top of every page so the site opens the same cinematic way.
+ *
+ * @param src - Full URL to the hero image (any URL — OptimizedImage derives the base path)
+ * @param videoSrc - Optional full URL to a video file for video hero sections
+ * @param alt - Alt text for accessibility
  */
 export function PageHero({
   src,
@@ -17,8 +21,8 @@ export function PageHero({
   children,
   height = "h-[78vh] sm:h-[88vh]",
 }: {
-  src?: string | undefined;
-  videoSrc?: string | undefined;
+  src?: string;
+  videoSrc?: string;
   alt: string;
   eyebrow?: string;
   title: string;
@@ -43,20 +47,24 @@ export function PageHero({
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           style={{ y, scale }}
           className="absolute inset-0 h-full w-full object-cover will-change-transform"
         />
-      ) : (
-        <motion.img
-          src={src}
-          alt={alt}
+      ) : src ? (
+        <motion.div
           style={{ y, scale }}
-          className="absolute inset-0 h-full w-full object-cover will-change-transform"
-          loading="eager"
-          decoding="async"
-        />
-      )}
+          className="absolute inset-0"
+        >
+          <OptimizedImage
+            src={src}
+            alt={alt}
+            fetchpriority="high"
+            sizes="100vw"
+            priority
+          />
+        </motion.div>
+      ) : null}
       <span
         aria-hidden
         className="absolute inset-0"

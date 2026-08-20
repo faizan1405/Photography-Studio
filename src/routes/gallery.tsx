@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Gallery } from "@/components/Gallery";
 import { ButtonLink } from "@/components/ui";
 
-const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+import { R2_BASE } from "@/lib/image-urls";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -29,7 +29,7 @@ function GalleryPage() {
       <Header />
 
       <PageHero
-        src={`${R2}/wedding/DSC05831.jpg`}
+        src={`${R2_BASE}/wedding/DSC05831.jpg`}
         alt="Cinematic frames from a recent Indian wedding celebration"
         eyebrow="Gallery"
         title="Frames from recent celebrations"

@@ -7,7 +7,7 @@ import { FadeUp, RevealImage } from "@/components/Reveal";
 import { ActionButton, SectionHeading } from "@/components/ui";
 import { brand, img, serviceLinks } from "@/lib/site";
 
-const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+import { R2_BASE } from "@/lib/image-urls";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -159,7 +159,7 @@ function Contact() {
               </div>
             </FadeUp>
             <RevealImage
-              src={`${R2}/ring/DSC08451.jpg`}
+              src={`${R2_BASE}/ring/DSC08451.jpg`}
               alt="Bride and groom exchanging varmala garlands"
               dir="right"
               className="aspect-[4/3] w-full"

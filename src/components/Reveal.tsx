@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -68,22 +69,30 @@ export function RevealImage({
     <div
       className={`group photo-frame relative overflow-hidden ${radius} bg-cream ${className}`}
     >
-      <motion.img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        onLoad={() => setLoaded(true)}
+      <motion.div
+        className="h-full w-full"
+        initial={{ scale: 1.12, opacity: 0 }}
         animate={loaded ? { scale: 1, opacity: 1 } : { scale: 1.12, opacity: 0 }}
         transition={{ duration: 1.5, delay, ease: EASE }}
-        className={`h-full w-full object-cover will-change-transform photo-hover ${imgClassName}`}
-      />
+      >
+        <OptimizedImage
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          priority={priority}
+          imgClassName={imgClassName}
+          onLoad={() => setLoaded(true)}
+        />
+      </motion.div>
+      {/* Cream skeleton overlay that fades when image loads */}
       {!loaded && !reduce && (
         <motion.span
           aria-hidden
           className="absolute inset-0 z-10 bg-cream"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
         />
       )}
       <span

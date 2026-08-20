@@ -1,9 +1,10 @@
 import { useState, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SectionHeading } from "@/components/ui";
+import { SectionHeading, ActionButton } from "@/components/ui";
 import { galleryCategories, galleryTabs } from "@/lib/gallery-data";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
+const PAGE_SIZE = 24;
 
 type TabId = (typeof galleryTabs)[number]["id"];
 
@@ -26,6 +27,7 @@ function getRevealDelay(index: number): number {
 
 export function Gallery() {
   const [activeTab, setActiveTab] = useState<TabId>("all");
+  const [displayCount, setDisplayCount] = useState(PAGE_SIZE);
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const observedRefs = useRef<Set<Element>>(new Set());
@@ -40,6 +42,14 @@ export function Gallery() {
     const cat = galleryCategories.find((c) => c.id === activeTab);
     return cat ? shuffle(cat.photos) : [];
   }, [activeTab, shuffledAll]);
+
+  const visiblePhotos = displayedPhotos.slice(0, displayCount);
+  const hasMore = displayCount < displayedPhotos.length;
+
+  const resetDisplay = useCallback(() => {
+    setDisplayCount(PAGE_SIZE);
+    observedRefs.current.clear();
+  }, []);
 
   const noPhotos = displayedPhotos.length === 0;
 
@@ -85,7 +95,7 @@ export function Gallery() {
             <button
               key={tab.id}
               onClick={() => {
-                observedRefs.current.clear();
+                resetDisplay();
                 setActiveTab(tab.id);
               }}
               aria-pressed={isActive}
@@ -129,7 +139,7 @@ export function Gallery() {
               transition={{ duration: 0.35, ease: EASE }}
               className="columns-2 gap-5 sm:columns-3 lg:columns-4"
             >
-              {displayedPhotos.map((src, i) => (
+              {visiblePhotos.map((src, i) => (
                 <div
                   key={src}
                   ref={registerObserver}
@@ -153,6 +163,17 @@ export function Gallery() {
           )}
         </AnimatePresence>
       </div>
+
+      {hasMore && (
+        <div className="mt-14 flex justify-center">
+          <ActionButton
+            variant="secondary"
+            onClick={() => setDisplayCount((c) => c + PAGE_SIZE)}
+          >
+            Load more photos ({displayedPhotos.length - displayCount} remaining)
+          </ActionButton>
+        </div>
+      )}
     </section>
   );
 }

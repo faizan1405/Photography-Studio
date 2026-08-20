@@ -1,5 +1,7 @@
 export const img = {};
-export const video = {};
+export const video = {
+  wedding: "/__l5e/assets-v1/f12a764d-043e-4787-9144-ba447886a443/Wedding_Photoshoots.mp4",
+};
 
 export const brand = {
   name: "Clickographers Wedding Films",
@@ -23,6 +25,5 @@ export const serviceLinks = [
   { label: "Sangeet Photoshoots", to: "/sangeet" },
   { label: "Wedding Photoshoots", to: "/wedding-photography" },
   { label: "Pre Wedding Photoshoots", to: "/pre-wedding" },
-  { label: "Ring Ceremony", to: "/ring-ceremony" },
 ] as const;
 

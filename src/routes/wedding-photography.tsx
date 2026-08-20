@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
+import { SectionHeading } from "@/components/ui";
+import { RevealImage } from "@/components/Reveal";
+import { galleryCategories } from "@/lib/gallery-data";
+import { video } from "@/lib/site";
 
-const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+import { R2_BASE } from "@/lib/image-urls";
 
 export const Route = createFileRoute("/wedding-photography")({
   head: () => ({
@@ -27,26 +31,26 @@ export const Route = createFileRoute("/wedding-photography")({
       title="From the first varmala to the last goodbye"
       tagline="The day itself. Fire, flowers, hands, tears and a thousand people — held together in photographs and one film you'll watch every anniversary."
       intro="Wedding day coverage is our core work. Two lead photographers, a dedicated cinematography team, and a ritual-by-ritual plan built with your pandit's timeline. We know when the varmala lands and where to stand for the kanyadaan, so nothing is caught from behind a shoulder."
-      hero={`${R2}/wedding/DSC05831.jpg`}
+      hero={`${R2_BASE}/wedding/DSC05831.jpg`}
       heroVideo={video.wedding}
       heroAlt="Bride and groom exchanging varmala garlands"
       stories={[
         {
           title: "Rituals covered by people who know them",
           text: "Baraat, varmala, kanyadaan, pheras, sindoor, vidaai — each has one right position and one right second. We build the shot plan with your family and pandit so we're already there when it happens.",
-          image: `${R2}/wedding/DSC07087.jpg`,
+          image: `${R2_BASE}/wedding/DSC07087.jpg`,
           alt: "Bride and groom performing the pheras around the sacred fire",
         },
         {
           title: "Portraits that belong in a frame",
           text: "A protected portrait window for the couple, and separate sittings for both families. Lit properly, composed carefully, and finished in a warm editorial grade you'll still love in twenty years.",
-          image: `${R2}/wedding/DSC06709.jpg`,
+          image: `${R2_BASE}/wedding/DSC06709.jpg`,
           alt: "Bridal portrait in a red and gold lehenga",
         },
         {
           title: "The vidaai, handled gently",
           text: "The hardest hour of the day is covered quietly, from a distance, with long lenses. No flash in anyone's face — just the truth of it, kept for later.",
-          image: `${R2}/wedding/DSC06857.jpg`,
+          image: `${R2_BASE}/wedding/DSC06857.jpg`,
           alt: "Emotional vidaai moment between bride and her mother",
         },
       ]}
@@ -99,6 +103,32 @@ export const Route = createFileRoute("/wedding-photography")({
           ],
         },
       ]}
+      extraContent={<WeddingGallery />}
     />
   ),
 });
+
+function WeddingGallery() {
+  const weddingCategory = galleryCategories.find((c) => c.id === "wedding");
+  return (
+    <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
+      <SectionHeading
+        eyebrow="Wedding"
+        title="Wedding photographs"
+        intro="Varmala, pheras, kanyadaan and vidaai — the full arc of the wedding day in frames."
+      />
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {(weddingCategory?.photos ?? []).map((src, i) => (
+          <RevealImage
+            key={src}
+            src={src}
+            alt={`Wedding photo ${i + 1}`}
+            delay={i * 0.04}
+            radius="rounded-[1.75rem]"
+            className={i % 5 === 0 ? "aspect-[3/4] w-full" : "aspect-[4/5] w-full"}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}

@@ -5,6 +5,7 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Scripts,
+  useRouter,
 } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -133,7 +134,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
-      ...SPLASH_PHOTOS.map((href) => ({ rel: "preload" as const, as: "image" as const, href })),
+      { rel: "preload", as: "image", href: "/assets/logo.jpg", fetchPriority: "high" as const },
     ],
   }),
   shellComponent: RootShell,

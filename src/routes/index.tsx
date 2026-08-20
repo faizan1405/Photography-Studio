@@ -5,10 +5,9 @@ import { PageHero } from "@/components/PageHero";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FadeUp, RevealImage } from "@/components/Reveal";
-import { ButtonLink, SectionHeading } from "@/components/ui";
+import { ButtonLink, SectionHeading, ActionButton } from "@/components/ui";
 import { brand, img, serviceLinks, video } from "@/lib/site";
-
-const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+import { R2_BASE } from "@/lib/image-urls";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,37 +33,30 @@ const services = [
   {
     label: "Pre Wedding",
     to: "/pre-wedding",
-    image: `${R2}/pre-wedding/DSC_0644.jpg`,
+    image: `${R2_BASE}/pre-wedding/DSC_0644.jpg`,
     alt: "Indian couple in a palace courtyard during a pre wedding shoot",
     text: "Unhurried portrait films in palaces, fields and quiet corners of the city.",
   },
   {
     label: "Sangeet",
     to: "/sangeet",
-    image: `${R2}/ring/IMG_9813.jpg`,
+    image: `${R2_BASE}/ring/IMG_9813.jpg`,
     alt: "Bride and groom dancing at their sangeet",
     text: "Stage lights, family choreography and the loudest laughter of the week.",
   },
   {
     label: "Mehndi",
     to: "/mehndi-photoshoots",
-    image: `${R2}/assets/haldi-mehendi/DSC01283.webp`,
+    image: `${R2_BASE}/assets/haldi-mehendi/DSC01283.webp`,
     alt: "Bride's hands being decorated with mehndi",
     text: "Green, gold and detail — the slow, tactile morning before the storm.",
   },
   {
     label: "Wedding Photography",
     to: "/wedding-photography",
-    image: `${R2}/ring/DSC08445.jpg`,
+    image: `${R2_BASE}/ring/DSC08445.jpg`,
     alt: "Varmala exchange between bride and groom",
     text: "Varmala to Vidai, capturing the emotions, celebrations and fleeting moments that make your wedding yours.",
-  },
-  {
-    label: "Ring Ceremony",
-    to: "/ring-ceremony",
-    image: `${R2}/ring/DSC08451.jpg`,
-    alt: "Couple exchanging rings during their ring ceremony",
-    text: "The first public promise — the ring exchange, family reactions, and the quiet start of everything to come.",
   },
 ] as const;
 
@@ -109,7 +101,7 @@ function Home() {
       <Header />
 
       <PageHero
-        src={`${R2}/pre-wedding/DSC_1145.jpg`}
+        src={`${R2_BASE}/pre-wedding/DSC_1145.jpg`}
         videoSrc={video.heroSection}
         alt="Indian bride and groom taking their pheras around the sacred fire"
         eyebrow="Indian Wedding Photography & Films"
@@ -148,7 +140,7 @@ function Home() {
             </div>
           </FadeUp>
           <RevealImage
-            src={`${R2}/ring/DSC08353.jpg`}
+            src={`${R2_BASE}/ring/DSC08353.jpg`}
             alt="Clickographers photographer at work during a wedding ceremony"
             dir="right"
             className="aspect-[4/5] w-full"
@@ -167,11 +159,11 @@ function Home() {
             <FadeUp key={s.to} delay={i * 0.08}>
               <Link to={s.to} className="group block">
                 <div className="relative overflow-hidden rounded-[2rem]" style={{ boxShadow: "var(--shadow-soft)" }}>
-                  <img
+                  <OptimizedImage
                     src={s.image}
                     alt={s.alt}
                     loading="lazy"
-                    className="h-[380px] w-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+                    imgClassName="h-[380px] w-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                   />
                   <span
                     className="absolute inset-0"
@@ -211,12 +203,11 @@ function Home() {
         <SectionHeading eyebrow="Selected Frames" title="From recent weddings" />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { src: `${R2}/ring/DSC02844.jpg`, alt: "Wedding ceremony moment", tall: true },
-            { src: `${R2}/pre-wedding/DSC_0746.jpg`, alt: "Pre-wedding portrait in natural light" },
-            { src: `${R2}/assets/haldi-mehendi/IMG_7303.webp`, alt: "Mehndi detail with floral jewellery" },
-            { src: `${R2}/ring/IMG_9813.jpg`, alt: "Celebration at the ring ceremony" },
-            { src: `${R2}/pre-wedding/DSC_0791.jpg`, alt: "Couple on stone steps at sunset", tall: true },
-            { src: `${R2}/assets/haldi-mehendi/DSC01283.webp`, alt: "Mehndi ceremony with family" },
+            { src: `${R2_BASE}/ring/DSC02844.jpg`, alt: "Wedding ceremony moment", tall: true },
+            { src: `${R2_BASE}/pre-wedding/DSC_0746.jpg`, alt: "Pre-wedding portrait in natural light" },
+            { src: `${R2_BASE}/assets/haldi-mehendi/IMG_7303.webp`, alt: "Mehndi detail with floral jewellery" },
+            { src: `${R2_BASE}/pre-wedding/DSC_0791.jpg`, alt: "Couple on stone steps at sunset", tall: true },
+            { src: `${R2_BASE}/assets/haldi-mehendi/DSC01283.webp`, alt: "Mehndi ceremony with family" },
           ].map((p, i) => (
             <RevealImage
               key={i}
@@ -274,11 +265,11 @@ function Home() {
 
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="relative overflow-hidden rounded-[2.5rem]">
-          <img
-            src={`${R2}/ring/DSC08691.jpg`}
+          <OptimizedImage
+            src={`${R2_BASE}/ring/DSC08691.jpg`}
             alt="Luxury wedding mandap decorated with flowers at dusk"
             loading="lazy"
-            className="h-[520px] w-full object-cover"
+            imgClassName="h-[520px] w-full object-cover"
           />
           <span
             className="absolute inset-0"
