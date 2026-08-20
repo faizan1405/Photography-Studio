@@ -2,13 +2,14 @@ import { optimizedUrl, responsiveSrcSet, defaultImageSizes } from "@/lib/image-u
 import { useRef, useEffect } from "react";
 
 /**
- * OptimizedImage — renders a <picture> element with AVIF/WebP/JPG fallbacks.
+ * OptimizedImage — renders an <img> with responsive srcSet and modern format support.
  *
- * The <img> src is the ORIGINAL URL (always works immediately).
- * The <source> tags and srcSet point to optimized variants on R2.
- * Once the optimization script runs, browsers automatically pick the best format.
+ * The src attribute uses the ORIGINAL URL (always works immediately).
+ * The srcSet provides optimized variants (AVIF/WebP) for browsers to pick once available.
+ * Once the optimization script is run on R2, browsers will automatically prefer the
+ * smaller, modern-format URLs from srcSet.
  *
- * @param src - Full URL to the image (used as fallback and for base path derivation)
+ * @param src - Full URL to the image (used as the primary src — always works)
  */
 export function OptimizedImage({
   src,
@@ -36,7 +37,7 @@ export function OptimizedImage({
   // Derive the base path from the full URL: strip domain, slashes, and extension
   const basePath = src
     .replace(/^https?:\/\/[^/]+/, "")
-    .replace(/^\/+|\/+$/g, "")
+    .replace(/^\/+|\/+$/g/, "")
     .replace(/\.\w+$/, "");
 
   useEffect(() => {
@@ -50,32 +51,19 @@ export function OptimizedImage({
   }, [onLoad]);
 
   return (
-    <picture>
-      {/* AVIF source — browser uses if supported and file exists */}
-      <source
-        srcSet={optimizedUrl(basePath, 1600, "avif")}
-        type="image/avif"
-      />
-      {/* WebP source — browser uses if supported and file exists */}
-      <source
-        srcSet={optimizedUrl(basePath, 1600, "webp")}
-        type="image/webp"
-      />
-      {/* Fallback img — uses the original URL (always works) with srcset for optimized variants */}
-      <img
-        ref={imgRef}
-        src={src}
-        srcSet={responsiveSrcSet(basePath)}
-        sizes={sizes ?? defaultImageSizes}
-        alt={alt}
-        width={width}
-        height={height}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        fetchpriority={fetchpriority}
-        onLoad={onLoad}
-        className={`h-full w-full object-cover will-change-transform ${imgClassName}`}
-      />
-    </picture>
+    <img
+      ref={imgRef}
+      src={src}
+      srcSet={responsiveSrcSet(basePath)}
+      sizes={sizes ?? defaultImageSizes}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      fetchpriority={fetchpriority}
+      onLoad={onLoad}
+      className={`h-full w-full object-cover will-change-transform ${imgClassName}`}
+    />
   );
 }
