@@ -1,6 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/ServicePage";
-import { img, video } from "@/lib/site";
+import { SectionHeading } from "@/components/ui";
+import { FadeUp, RevealImage } from "@/components/Reveal";
+
+const preWeddingPhotos = [
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0644.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0746.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0791.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_0836.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_1145.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_1399.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_1499.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_1531.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/DSC_1542.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/_MG_0381.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/_MG_0407.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/_MG_0419.jpg",
+  "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev/pre-wedding/_MG_0435.jpg",
+];
+
+function PreWeddingGallery() {
+  return (
+    <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
+      <SectionHeading
+        eyebrow="Pre-Wedding"
+        title="Pre-wedding photographs"
+        intro="Every frame — from the first light on the palace walls to the quiet conversation on the stone steps."
+      />
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {preWeddingPhotos.map((src, i) => (
+          <RevealImage
+            key={src}
+            src={src}
+            alt={`Pre-wedding photo ${i + 1}`}
+            delay={i * 0.04}
+            radius="rounded-[1.75rem]"
+            className={i % 5 === 0 ? "aspect-[3/4] w-full" : "aspect-[4/5] w-full"}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export const Route = createFileRoute("/pre-wedding")({
   head: () => ({
@@ -98,6 +139,7 @@ export const Route = createFileRoute("/pre-wedding")({
           ],
         },
       ]}
+      extraContent={<PreWeddingGallery />}
     />
   ),
 });

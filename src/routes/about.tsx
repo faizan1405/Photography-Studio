@@ -27,6 +27,8 @@ export const Route = createFileRoute("/about")({
   component: About,
 });
 
+const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+
 const values = [
   {
     title: "Presence over posing",
@@ -60,10 +62,11 @@ function About() {
       <Header />
 
       <PageHero
-        src=""
-        alt="Clickographers photographer photographing a wedding ceremony"
+        src={`${R2}/about-covers/studio-hero.jpg`}
+        alt="Cinematic view of an Indian wedding mandap at golden hour"
         eyebrow="Our Story"
         title="Twelve years of standing quietly in the middle of joy"
+        height="h-[88vh]"
       />
 
       <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-16">
@@ -90,8 +93,8 @@ function About() {
             </div>
           </FadeUp>
           <RevealImage
-            src=""
-            alt="Clickographers photographer photographing a wedding ceremony"
+            src={`${R2}/about-covers/studio-belief.jpg`}
+            alt="Wedding photographer capturing a candid moment during the ceremony"
             priority
             dir="right"
             className="aspect-[4/5] w-full"
@@ -102,7 +105,7 @@ function About() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <RevealImage
-            src=""
+            src={`${R2}/about-covers/founder-portrait.jpg`}
             alt="Portrait of the founder of Clickographers Wedding Films"
             className="aspect-[3/4] w-full"
           />
@@ -157,9 +160,18 @@ function About() {
       <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-16">
         <div className="grid gap-5 sm:grid-cols-3">
           {[
-            { src: "", alt: "" },
-            { src: "", alt: "" },
-            { src: "", alt: "" },
+            {
+              src: `${R2}/about-covers/growth-1.jpg`,
+              alt: "Wedding couple sharing a tender moment during their celebration",
+            },
+            {
+              src: `${R2}/about-covers/growth-2.jpg`,
+              alt: "Wedding couple embracing at sunset during their special day",
+            },
+            {
+              src: `${R2}/about-covers/growth-3.jpg`,
+              alt: "Close-up of wedding rings on the couple's joined hands",
+            },
           ].map((p, i) => (
             <RevealImage
               key={i}

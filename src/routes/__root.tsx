@@ -6,7 +6,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -71,6 +71,44 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SPLASH_PHOTOS = [
+  "/assets/haldi-mehendi/DSC00187.webp",
+  "/assets/haldi-mehendi/DSC00213.webp",
+  "/assets/haldi-mehendi/DSC00218.webp",
+  "/assets/haldi-mehendi/DSC00430.webp",
+  "/assets/haldi-mehendi/DSC00451.webp",
+  "/assets/haldi-mehendi/DSC00469.webp",
+  "/assets/haldi-mehendi/DSC00660.webp",
+  "/assets/haldi-mehendi/DSC00664.webp",
+  "/assets/haldi-mehendi/DSC01146.webp",
+  "/assets/haldi-mehendi/DSC01156.webp",
+  "/assets/haldi-mehendi/DSC01158.webp",
+  "/assets/haldi-mehendi/DSC01257.webp",
+  "/assets/haldi-mehendi/DSC01283.webp",
+  "/assets/haldi-mehendi/DSC01305.webp",
+  "/assets/haldi-mehendi/DSC01351.webp",
+  "/assets/haldi-mehendi/DSC01361.webp",
+  "/assets/haldi-mehendi/DSC01375.webp",
+  "/assets/haldi-mehendi/DSC01433.webp",
+  "/assets/haldi-mehendi/DSC01434.webp",
+  "/assets/haldi-mehendi/DSC01548.webp",
+  "/assets/haldi-mehendi/DSC01562.webp",
+  "/assets/haldi-mehendi/DSC01574.webp",
+  "/assets/haldi-mehendi/DSC01577.webp",
+  "/assets/haldi-mehendi/DSC01578.webp",
+  "/assets/haldi-mehendi/DSC01621.webp",
+  "/assets/haldi-mehendi/DSC01789.webp",
+  "/assets/haldi-mehendi/DSC01875.webp",
+  "/assets/haldi-mehendi/DSC01905.webp",
+  "/assets/haldi-mehendi/IMG_7303.webp",
+  "/assets/haldi-mehendi/IMG_7318.webp",
+  "/assets/haldi-mehendi/IMG_7340.webp",
+  "/assets/haldi-mehendi/IMG_7419.webp",
+  "/assets/haldi-mehendi/IMG_7425.webp",
+  "/assets/haldi-mehendi/IMG_7431.webp",
+  "/assets/haldi-mehendi/IMG_7433.webp",
+];
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -95,6 +133,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      ...SPLASH_PHOTOS.map((href) => ({ rel: "preload" as const, as: "image" as const, href })),
     ],
   }),
   shellComponent: RootShell,
@@ -120,12 +159,35 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [showLoader, setShowLoader] = useState(true);
+  const loaderDoneRef = useRef(false);
+
+  // Safety net: if IntroLoader never calls onDone, force-remove the splash
+  // after SAFETY_TIMEOUT_MS (8 s) so the homepage is always accessible.
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      if (!loaderDoneRef.current) {
+        loaderDoneRef.current = true;
+        setShowLoader(false);
+      }
+    }, 9000);
+    return () => window.clearTimeout(t);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {showLoader && <IntroLoader onDone={() => setShowLoader(false)} />}
+      {/* Homepage always renders underneath the splash overlay */}
       <Outlet />
       <WhatsAppButton />
+
+      {/* Splash is an overlay — hidden from DOM entirely after onDone fires */}
+      {showLoader && !loaderDoneRef.current && (
+        <IntroLoader
+          onDone={() => {
+            loaderDoneRef.current = true;
+            setShowLoader(false);
+          }}
+        />
+      )}
     </QueryClientProvider>
   );
 }

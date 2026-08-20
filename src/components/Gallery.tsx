@@ -1,9 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "@/components/ui";
 import { galleryCategories, galleryTabs } from "@/lib/gallery-data";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 type TabId = (typeof galleryTabs)[number]["id"];
 
@@ -11,24 +11,64 @@ function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j]!, a[i]!];
+    const x = a[i]!;
+    const y = a[j]!;
+    a[i] = y;
+    a[j] = x;
   }
   return a;
+}
+
+function getRevealDelay(index: number): number {
+  if (index < 30) return 0.025 * index * Math.log10(index + 1);
+  return 0.85 + 0.012 * (index - 30);
 }
 
 export function Gallery() {
   const [activeTab, setActiveTab] = useState<TabId>("all");
 
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const observedRefs = useRef<Set<Element>>(new Set());
+
+  const shuffledAll = useMemo(() => {
+    const all = galleryCategories.flatMap((c) => c.photos);
+    return shuffle(all);
+  }, []);
+
   const displayedPhotos = useMemo(() => {
-    if (activeTab === "all") {
-      const all = galleryCategories.flatMap((c) => c.photos);
-      return shuffle(all);
-    }
+    if (activeTab === "all") return shuffledAll;
     const cat = galleryCategories.find((c) => c.id === activeTab);
     return cat ? shuffle(cat.photos) : [];
-  }, [activeTab]);
+  }, [activeTab, shuffledAll]);
 
   const noPhotos = displayedPhotos.length === 0;
+
+  const registerObserver = useCallback(
+    (el: HTMLDivElement | null) => {
+      if (!el) return;
+
+      if (!observerRef.current) {
+        observerRef.current = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !observedRefs.current.has(entry.target)) {
+                observedRefs.current.add(entry.target);
+                (entry.target as HTMLDivElement).style.opacity = "1";
+                (entry.target as HTMLDivElement).style.transform = "translateY(0) scale(1)";
+                observerRef.current?.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.05, rootMargin: "60px" }
+        );
+      }
+
+      if (!observedRefs.current.has(el)) {
+        observerRef.current.observe(el);
+      }
+    },
+    []
+  );
 
   return (
     <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-16">
@@ -44,10 +84,13 @@ export function Gallery() {
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                observedRefs.current.clear();
+                setActiveTab(tab.id);
+              }}
               aria-pressed={isActive}
               className={[
-                "rounded-full px-5 py-2.5 text-[0.68rem] font-medium uppercase tracking-[0.24em] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                "rounded-full px-5 py-2.5 text-[0.68rem] font-medium uppercase tracking-[0.24em] transition-colors duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
                 isActive
                   ? "bg-wine text-cream"
                   : "bg-cream text-wine hover:bg-champagne border border-wine/20",
@@ -60,14 +103,14 @@ export function Gallery() {
       </div>
 
       <div className="mt-14">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="wait">
           {noPhotos ? (
             <motion.div
               key="empty"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, ease: EASE }}
               className="flex flex-col items-center justify-center py-24 text-center"
             >
               <p className="font-display text-xl text-wine">
@@ -83,28 +126,27 @@ export function Gallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.35, ease: EASE }}
               className="columns-2 gap-5 sm:columns-3 lg:columns-4"
             >
               {displayedPhotos.map((src, i) => (
-                <div key={src} className="mb-5 break-inside-avoid">
-                  <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.7,
-                      delay: i * 0.08,
-                      ease: EASE,
-                    }}
-                  >
-                    <img
-                      src={src}
-                      alt={`Gallery photo ${i + 1}`}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full rounded-[1.5rem] object-cover shadow-lg transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03] hover:shadow-xl"
-                    />
-                  </motion.div>
+                <div
+                  key={src}
+                  ref={registerObserver}
+                  className="mb-5 break-inside-avoid"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(24px) scale(0.92)",
+                    transition: `opacity 0.65s cubic-bezier(0.25,0.1,0.25,1) ${getRevealDelay(i)}s, transform 0.65s cubic-bezier(0.25,0.1,0.25,1) ${getRevealDelay(i)}s`,
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={`Gallery photo ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full rounded-[1.5rem] object-cover shadow-lg transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-[1.03] hover:shadow-xl"
+                  />
                 </div>
               ))}
             </motion.div>

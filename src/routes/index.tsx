@@ -8,6 +8,8 @@ import { FadeUp, RevealImage } from "@/components/Reveal";
 import { ButtonLink, SectionHeading } from "@/components/ui";
 import { brand, img, serviceLinks, video } from "@/lib/site";
 
+const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -32,35 +34,35 @@ const services = [
   {
     label: "Pre Wedding",
     to: "/pre-wedding",
-    image: "",
+    image: `${R2}/pre-wedding/DSC_0644.jpg`,
     alt: "Indian couple in a palace courtyard during a pre wedding shoot",
     text: "Unhurried portrait films in palaces, fields and quiet corners of the city.",
   },
   {
     label: "Sangeet",
     to: "/sangeet",
-    image: "",
+    image: `${R2}/ring/IMG_9813.jpg`,
     alt: "Bride and groom dancing at their sangeet",
     text: "Stage lights, family choreography and the loudest laughter of the week.",
   },
   {
     label: "Mehndi",
     to: "/mehndi-photoshoots",
-    image: "",
+    image: `${R2}/assets/haldi-mehendi/DSC01283.webp`,
     alt: "Bride's hands being decorated with mehndi",
     text: "Green, gold and detail — the slow, tactile morning before the storm.",
   },
   {
     label: "Wedding Photography",
     to: "/wedding-photography",
-    image: "",
+    image: `${R2}/ring/DSC08445.jpg`,
     alt: "Varmala exchange between bride and groom",
     text: "Varmala to Vidai, capturing the emotions, celebrations and fleeting moments that make your wedding yours.",
   },
   {
     label: "Ring Ceremony",
     to: "/ring-ceremony",
-    image: "",
+    image: `${R2}/ring/DSC08451.jpg`,
     alt: "Couple exchanging rings during their ring ceremony",
     text: "The first public promise — the ring exchange, family reactions, and the quiet start of everything to come.",
   },
@@ -107,7 +109,7 @@ function Home() {
       <Header />
 
       <PageHero
-        src=""
+        src={`${R2}/pre-wedding/DSC_1145.jpg`}
         videoSrc={video.heroSection}
         alt="Indian bride and groom taking their pheras around the sacred fire"
         eyebrow="Indian Wedding Photography & Films"
@@ -146,7 +148,7 @@ function Home() {
             </div>
           </FadeUp>
           <RevealImage
-            src=""
+            src={`${R2}/ring/DSC08353.jpg`}
             alt="Clickographers photographer at work during a wedding ceremony"
             dir="right"
             className="aspect-[4/5] w-full"
@@ -209,12 +211,12 @@ function Home() {
         <SectionHeading eyebrow="Selected Frames" title="From recent weddings" />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {[
-            { src: "", alt: "", tall: true },
-            { src: "", alt: "" },
-            { src: "", alt: "" },
-            { src: "", alt: "" },
-            { src: "", alt: "", tall: true },
-            { src: "", alt: "" },
+            { src: `${R2}/ring/DSC02844.jpg`, alt: "Wedding ceremony moment", tall: true },
+            { src: `${R2}/pre-wedding/DSC_0746.jpg`, alt: "Pre-wedding portrait in natural light" },
+            { src: `${R2}/assets/haldi-mehendi/IMG_7303.webp`, alt: "Mehndi detail with floral jewellery" },
+            { src: `${R2}/ring/IMG_9813.jpg`, alt: "Celebration at the ring ceremony" },
+            { src: `${R2}/pre-wedding/DSC_0791.jpg`, alt: "Couple on stone steps at sunset", tall: true },
+            { src: `${R2}/assets/haldi-mehendi/DSC01283.webp`, alt: "Mehndi ceremony with family" },
           ].map((p, i) => (
             <RevealImage
               key={i}
@@ -273,7 +275,7 @@ function Home() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="relative overflow-hidden rounded-[2.5rem]">
           <img
-            src=""
+            src={`${R2}/ring/DSC08691.jpg`}
             alt="Luxury wedding mandap decorated with flowers at dusk"
             loading="lazy"
             className="h-[520px] w-full object-cover"
