@@ -134,6 +134,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      // DNS prefetch for the R2 image CDN so the first image request fires
+      // before the user scrolls/renders and starts the connection early.
+      { rel: "preconnect", href: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev", crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev" },
       { rel: "preload", as: "image", href: "/assets/logo.jpg", fetchPriority: "high" as const },
     ],
   }),

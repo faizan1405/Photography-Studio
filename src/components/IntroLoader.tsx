@@ -46,22 +46,6 @@ const PHOTOS = [
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function preloadImage(src: string, timeoutMs: number): Promise<void> {
-  return new Promise((resolve) => {
-    const img = new Image();
-    let settled = false;
-    const done = () => {
-      if (settled) return;
-      settled = true;
-      resolve();
-    };
-    img.onload = done;
-    img.onerror = done;
-    img.src = src;
-    setTimeout(done, timeoutMs);
-  });
-}
-
 /**
  * Overlay splash: 35 wedding photos rapidly stack on top of each other
  * (every 80 ms), then the overlay fades out so the homepage is revealed.
@@ -92,8 +76,14 @@ export function IntroLoader({ onDone }: { onDone: () => void }) {
     const safety = window.setTimeout(finish, SAFETY_TIMEOUT_MS);
 
     const run = async () => {
-      // Preload (with per-image timeout), then start the montage.
-      await Promise.all(PHOTOS.map((p) => preloadImage(p, PRELOAD_TIMEOUT_MS)));
+      // Start montage immediately — don't block on all 35 preloads.
+      // Preload in background so images are ready when they appear in the montage.
+      PHOTOS.forEach((p) => {
+        const img = new Image();
+        img.onload = () => {};
+        img.onerror = () => {};
+        img.src = p;
+      });
 
       for (let i = 0; i < PHOTOS.length; i++) {
         await new Promise<void>((resolve) => {

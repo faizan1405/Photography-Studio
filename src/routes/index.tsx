@@ -269,7 +269,7 @@ function Home() {
             src={`${R2_BASE}/ring/DSC08691.jpg`}
             alt="Luxury wedding mandap decorated with flowers at dusk"
             loading="lazy"
-            imgClassName="h-[520px] w-full object-cover"
+            className="h-[520px] w-full object-cover"
           />
           <span
             className="absolute inset-0"

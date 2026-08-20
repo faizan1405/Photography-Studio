@@ -37,7 +37,8 @@ export function OptimizedImage({
   // Derive the base path from the full URL: strip domain, slashes, and extension
   const basePath = src
     .replace(/^https?:\/\/[^/]+/, "")
-    .replace(/^\/+|\/+$/g/, "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "")
     .replace(/\.\w+$/, "");
 
   useEffect(() => {
