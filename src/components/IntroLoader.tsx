@@ -173,7 +173,7 @@ export function IntroLoader({ onDone }: { onDone: () => void }) {
         })}
 
         <div className="absolute -bottom-12 left-0 right-0 flex justify-center">
-          <img src="/assets/logo.jpg" alt="Clickographers Wedding Films" className="h-10 w-auto opacity-20" />
+          <img src="/assets/logo.png" alt="Clickographers Wedding Films" className="h-10 w-auto opacity-20" />
         </div>
       </div>
     </motion.div>
