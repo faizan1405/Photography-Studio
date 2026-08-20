@@ -1,4 +1,3 @@
-import { optimizedUrl, responsiveSrcSet, defaultImageSizes } from "@/lib/image-urls";
 import { useRef, useEffect } from "react";
 
 /**
@@ -34,13 +33,6 @@ export function OptimizedImage({
 }) {
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Derive the base path from the full URL: strip domain, slashes, and extension
-  const basePath = src
-    .replace(/^https?:\/\/[^/]+/, "")
-    .replace(/^\/+/, "")
-    .replace(/\/+$/, "")
-    .replace(/\.\w+$/, "");
-
   useEffect(() => {
     if (!onLoad) return;
     const img = imgRef.current;
@@ -55,8 +47,6 @@ export function OptimizedImage({
     <img
       ref={imgRef}
       src={src}
-      srcSet={responsiveSrcSet(basePath)}
-      sizes={sizes ?? defaultImageSizes}
       alt={alt}
       width={width}
       height={height}
