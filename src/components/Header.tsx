@@ -32,7 +32,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 py-1.5 lg:px-10">
         <Link to="/" className="shrink-0 flex items-center gap-3" aria-label={brand.name} onClick={() => setOpen(false)}>
-          <img src="/assets/logo.jpg" alt={brand.name} fetchpriority="high" className="h-8 w-auto sm:h-9" />
+          <img src="/assets/logo.jpg" alt={brand.name} fetchPriority="high" className="h-8 w-auto sm:h-9" />
           <span className="font-display text-lg text-wine sm:text-xl">{brand.short}</span>
         </Link>
 

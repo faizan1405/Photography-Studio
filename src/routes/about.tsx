@@ -105,8 +105,8 @@ function About() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <RevealImage
-            src={`${R2_BASE}/pre-wedding/DSC_0746.jpg`}
-            alt="Intimate couple portrait in natural light"
+            src="/assets/founder.jpg"
+            alt="Founder of Clickographers Wedding Films"
             className="aspect-[3/4] w-full"
           />
           <FadeUp className="flex flex-col gap-6">

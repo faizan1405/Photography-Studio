@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FadeUp, RevealImage } from "@/components/Reveal";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { ButtonLink, SectionHeading, ActionButton } from "@/components/ui";
 import { brand, img, serviceLinks, video } from "@/lib/site";
 import { R2_BASE } from "@/lib/image-urls";

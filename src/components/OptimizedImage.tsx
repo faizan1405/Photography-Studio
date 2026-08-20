@@ -15,7 +15,7 @@ export function OptimizedImage({
   alt,
   width,
   height,
-  fetchpriority,
+  fetchPriority,
   sizes,
   imgClassName = "",
   priority = false,
@@ -25,7 +25,7 @@ export function OptimizedImage({
   alt: string;
   width?: number;
   height?: number;
-  fetchpriority?: "high" | "low" | "auto";
+  fetchPriority?: "high" | "low" | "auto";
   sizes?: string;
   imgClassName?: string;
   priority?: boolean;
@@ -52,7 +52,7 @@ export function OptimizedImage({
       height={height}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
-      fetchpriority={fetchpriority}
+      fetchPriority={fetchPriority}
       onLoad={onLoad}
       className={`h-full w-full object-cover will-change-transform ${imgClassName}`}
     />

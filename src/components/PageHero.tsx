@@ -59,7 +59,7 @@ export function PageHero({
           <OptimizedImage
             src={src}
             alt={alt}
-            fetchpriority="high"
+            fetchPriority="high"
             sizes="100vw"
             priority
           />
