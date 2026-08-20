@@ -8,6 +8,8 @@ import { FadeUp, RevealImage } from "@/components/Reveal";
 import { ButtonLink, SectionHeading } from "@/components/ui";
 import { img, serviceLinks } from "@/lib/site";
 
+const R2 = "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev";
+
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
@@ -31,28 +33,28 @@ export const Route = createFileRoute("/services")({
 const cards = [
   {
     ...serviceLinks[2],
-    image: "",
+    image: `${R2}/assets/haldi-mehendi/DSC00664.webp`,
     alt: "Bride having mehndi applied before her wedding",
     from: "₹45,000",
     text: "Detail-led coverage of the mehndi morning — henna work, jewellery, family and light.",
   },
   {
     ...serviceLinks[0],
-    image: "",
+    image: `${R2}/pre-wedding/DSC_0644.jpg`,
     alt: "Couple during a pre wedding shoot in a palace courtyard",
     from: "₹65,000",
     text: "A half or full day portrait session in locations chosen for you, plus a short film.",
   },
   {
     ...serviceLinks[1],
-    image: "",
+    image: `${R2}/ring/IMG_9813.jpg`,
     alt: "Sangeet night performance with bride and groom dancing",
     from: "₹55,000",
     text: "Stage-lit coverage of performances, reactions and the after-party energy.",
   },
   {
     ...serviceLinks[3],
-    image: "",
+    image: `${R2}/ring/DSC08445.jpg`,
     alt: "Varmala exchange during an Indian wedding ceremony",
     from: "₹1,25,000",
     text: "Full wedding day documentation from getting ready to vidaai, photo and film.",
@@ -95,8 +97,8 @@ function Services() {
       <Header />
 
       <PageHero
-        src=""
-        alt="Wedding mandap decorated with flowers at dusk"
+        src={`${R2}/ring/DSC08691.jpg`}
+        alt="Luxury wedding mandap decorated with flowers at dusk"
         eyebrow="Services & Packages"
         title="Coverage built around your celebration"
       />
@@ -146,7 +148,7 @@ function Services() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <RevealImage
-            src=""
+            src={`${R2}/ring/DSC08691.jpg`}
             alt="Couple walking through a shower of rose petals"
             className="aspect-[4/5] w-full"
           />
