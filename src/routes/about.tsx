@@ -94,9 +94,8 @@ function About() {
             </div>
           </FadeUp>
           <RevealImage
-            src={`${R2_BASE}/ring/IMG_9813.jpg`}
-            alt="Bride and groom dancing at their sangeet"
-            priority
+            src={`${R2_BASE}/studio/studio-img.jpg`}
+            alt="Clickographers studio at Spectrum Metro Mall, Noida"
             dir="right"
             className="aspect-[4/5] w-full"
           />
