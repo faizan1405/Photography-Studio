@@ -63,7 +63,7 @@ function About() {
       <Header />
 
       <PageHero
-        src={`${R2_BASE}/ring/1122.jpg`}
+        src={`${R2_BASE}/wedding/DSC05872.jpg`}
         alt="Luxury wedding mandap decorated with flowers at dusk"
         eyebrow="Our Story"
         title="Twelve years of standing quietly in the middle of joy"
