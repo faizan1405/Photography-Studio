@@ -138,7 +138,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // before the user scrolls/renders and starts the connection early.
       { rel: "preconnect", href: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "https://pub-a9ee4b9e6d764ca88dc8d5f3776c28e2.r2.dev" },
-      { rel: "preload", as: "image", href: "/assets/logo.jpg", fetchPriority: "high" as const },
+      { rel: "preload", as: "image", href: "/assets/logo.png", fetchPriority: "high" as const },
     ],
   }),
   shellComponent: RootShell,
