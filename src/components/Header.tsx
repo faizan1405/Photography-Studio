@@ -76,7 +76,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <ButtonLink to="/gallery">View Wedding Stories</ButtonLink>
+          <ButtonLink to="/contact">Tell Us Your Story</ButtonLink>
         </div>
 
         <button
@@ -116,8 +116,8 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-5">
-              <ButtonLink to="/gallery" className="w-full">
-                View Wedding Stories
+              <ButtonLink to="/contact" className="w-full">
+                Tell Us Your Story
               </ButtonLink>
             </div>
           </div>

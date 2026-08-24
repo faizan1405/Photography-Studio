@@ -109,7 +109,7 @@ function Home() {
         title="Your wedding, remembered the way it felt"
         height="h-[92vh]"
       >
-        <ButtonLink to="/gallery">View Wedding Stories</ButtonLink>
+        <ButtonLink to="/contact">Tell Us Your Story</ButtonLink>
         <ButtonLink to="/contact" variant="wine">
           Enquire Now
         </ButtonLink>
@@ -141,8 +141,8 @@ function Home() {
             </div>
           </FadeUp>
           <RevealImage
-            src={`${R2_BASE}/ring/DSC08353.jpg`}
-            alt="Clickographers photographer at work during a wedding ceremony"
+            src={`${R2_BASE}/studio/studio-img.jpg`}
+            alt="Clickographers studio at Spectrum Metro Mall, Noida"
             dir="right"
             className="aspect-[4/5] w-full"
           />

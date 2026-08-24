@@ -38,7 +38,7 @@ export const Route = createFileRoute("/wedding-photography")({
         {
           title: "Rituals covered by people who know them",
           text: "Baraat, varmala, kanyadaan, pheras, sindoor, vidaai — each has one right position and one right second. We build the shot plan with your family and pandit so we're already there when it happens.",
-          image: `${R2_BASE}/wedding/DSC07087.jpg`,
+          image: `${R2_BASE}/ring/DSC02844.jpg`,
           alt: "Bride and groom performing the pheras around the sacred fire",
         },
         {
