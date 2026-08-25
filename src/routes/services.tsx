@@ -98,8 +98,8 @@ function Services() {
       <Header />
 
       <PageHero
-        src={`${R2_BASE}/ring/DSC08691.jpg`}
-        alt="Luxury wedding mandap decorated with flowers at dusk"
+        src="/assets/1122.jpeg"
+        alt="Service package cover photograph"
         eyebrow="Services & Packages"
         title="Coverage built around your celebration"
       />
@@ -149,8 +149,8 @@ function Services() {
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <RevealImage
-            src={`${R2_BASE}/ring/DSC08691.jpg`}
-            alt="Couple walking through a shower of rose petals"
+            src="/assets/1122.jpeg"
+            alt="Service package cover photograph"
             className="aspect-[4/5] w-full"
           />
           <FadeUp className="flex flex-col gap-6">
